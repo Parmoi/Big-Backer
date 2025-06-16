@@ -15,3 +15,16 @@ def set_location():
     }
 
     return jsonify({'status': 'success'})
+
+@main.route('/get_location', methods=['GET'])
+def get_location():
+    location = session.get('location')
+    lat = location['latitude']
+    lon = location['longitude']
+
+    if lat is not None and lon is not None:
+        return jsonify({'latitude': lat, 'longitude': lon})
+    else:
+        return jsonify({'error': 'Location not set yet'}), 404
+    
+

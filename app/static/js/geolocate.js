@@ -26,3 +26,25 @@ function findGeolocation() {
         }
     }
 }
+
+// Gets geolocation from session
+async function getGeolocation() {
+    console.log("Attempting to find geolocation of user");
+
+    // Find element with 'geolocation' id inside document
+    const geolocation = document.getElementById('geolocation');
+
+    // Call the get_location route to get saved lat/lon from session
+    const response = await fetch('/get_location');
+
+    if (response.ok) {
+        // API call returns an "ok" (everything works fine)
+        // Find lat/lon and set text in document to it
+        const result = await response.json();
+        const text = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
+        geolocation.textContent = text;
+    } else {
+        // API call returns some error
+        geolocation.textContent = "Location not set.";
+    }
+}
