@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, render_template, request, session
 
+from app.utils import overpass
+
 main = Blueprint('main', __name__)
 
 @main.route('/')
@@ -27,4 +29,14 @@ def get_location():
     else:
         return jsonify({'error': 'Location not set yet'}), 404
     
+@main.route('/get_restaurants', methods=['GET'])
+def get_restaurants():
+    location = session.get('location')
+    lat = location['latitude']
+    lon = location['longitude']
 
+    if not lat or not lon:
+        return jsonify({"error": "Missing coordinates"}), 400
+    
+    places = overpass.restaurants(lat, lon)
+    return jsonify(places)

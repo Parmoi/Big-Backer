@@ -3,6 +3,7 @@
     <head>
         <title>Home</title>
         <script src="/static/js/geolocate.js"></script>
+        <script src="/static/js/restaurants.js"></script>
     </head>
     <body>
         <h1 style="text-align: center;">Welcome to the home!</h1>
@@ -15,6 +16,10 @@
         <p id="geolocation" style="text-align: center;">Geolocation</p>
         <div style="text-align: center;">
             <button onclick="getGeolocation()">Click to view lat and lon values</button>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="getRestaurants()">Find nearby restaurants</button>
         </div>
     </body>
 </html>
