@@ -8,6 +8,13 @@
     <body>
         <h1 style="text-align: center;">Welcome to the home!</h1>
 
+        <p style="text-align: center;"> Click on the following button to go to search page.</p>
+        <div style="text-align: center;">
+            <a href="{{ url_for('main.search') }}">
+                <button>Search Page</button>
+            </a>
+        </div>
+
         <p style="text-align: center;">Click on the following button to share your location.</p>
         <div style="text-align: center;">
             <button onclick="findGeolocation()">Share Location</button>

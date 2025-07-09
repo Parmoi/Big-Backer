@@ -8,6 +8,10 @@ main = Blueprint('main', __name__)
 def home():
     return render_template('home.html')
 
+@main.route('/search')
+def search():
+    return render_template('search.html')
+
 @main.route('/save_location', methods=['POST'])
 def set_location():
     data = request.get_json()
@@ -45,5 +49,8 @@ def get_restaurants():
 def search_places():
     query = 'Ashfield restaurants'
 
-    places = google_places.places_query(query, current_app.config['GOOGLE_PLACES_API_KEY'])
-    return jsonify(places)
+    place_ids = google_places.find_place_ids(query, current_app.config['GOOGLE_PLACES_API_KEY'])
+
+    place_details = google_places.find_detailed_places(place_ids, current_app.config['GOOGLE_PLACES_API_KEY'])
+
+    return jsonify(place_details)
