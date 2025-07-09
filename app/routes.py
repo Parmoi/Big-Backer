@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, render_template, request, session
+from flask import Blueprint, current_app, jsonify, render_template, request, session
 
-from app.utils import overpass
+from app.utils import google_places, overpass
 
 main = Blueprint('main', __name__)
 
@@ -36,7 +36,14 @@ def get_restaurants():
     lon = location['longitude']
 
     if not lat or not lon:
-        return jsonify({"error": "Missing coordinates"}), 400
+        return jsonify({'error': 'Missing coordinates'}), 400
     
     places = overpass.restaurants(lat, lon)
+    return jsonify(places)
+
+@main.route('/search_places', methods=['GET'])
+def search_places():
+    query = 'Ashfield restaurants'
+
+    places = google_places.places_query(query, current_app.config['GOOGLE_PLACES_API_KEY'])
     return jsonify(places)

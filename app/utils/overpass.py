@@ -5,7 +5,7 @@ def restaurants(lat, lon, radius=1000):
     url = "https://overpass-api.de/api/interpreter"
     query = f"""
     [out:json];
-    node(around:500,{lat},{lon})["amenity"="restaurant"];    
+    node(around:{radius},{lat},{lon})["amenity"="restaurant"];    
     out;
     """
 
