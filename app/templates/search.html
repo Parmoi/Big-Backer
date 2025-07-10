@@ -2,10 +2,41 @@
 <html>
     <head>
         <title>Restaurant Search</title>
-        <!-- Add scripts here: <script src= ...> -->
+        <script src="/static/js/restaurants.js"></script>
     </head>
     <body>
         <h1 style="text-align: center;">Please enter the following stuff!</h1>
+
+        <div style="text-align: center;">
+            <label for="query">Query:</label>
+            <input type="text" id="query" name="query">
+            <br>
+            
+            <label for="min-rating">Minimum rating:</label>
+            <select id="min-rating" name="rating">
+                <option value="0">Any</option>
+                <option value="4.5">4.5+</option>
+                <option value="4.0">4.0+</option>
+                <option value="3.5">3.5+</option>
+                <option value="3.0">3.0+</option>
+                <option value="2.5">2.5+</option>
+                <option value="2.0">2.0+</option>
+                <option value="1.5">1.5+</option>
+                <option value="1.0">1.0+</option>
+            </select>
+            <br>
+
+            <label for="open-time">Enter desired open time:</label>
+            <input type="time" name="open-time" id="open-time" value="00:00">
+            <br>
+
+            <label for="close-time">Enter desired close time:</label>
+            <input type="time" name="close-time" id="close-time" value="23:59">
+            <br><br>
+
+            <button onclick="findFilteredRestaurants()">Search Restaurants</button>
+            <br><br>
+        </div>
 
         <div style="text-align: center;">
             <a href="{{ url_for('main.home') }}">
