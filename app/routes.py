@@ -49,8 +49,21 @@ def get_restaurants():
 def search_places():
     query = 'Ashfield restaurants'
 
-    place_ids = google_places.find_place_ids(query, current_app.config['GOOGLE_PLACES_API_KEY'])
+    place_ids = google_places.find_place_ids(current_app.config['GOOGLE_PLACES_API_KEY'], query, 4.0)
 
     place_details = google_places.find_detailed_places(place_ids, current_app.config['GOOGLE_PLACES_API_KEY'])
 
     return jsonify(place_details)
+
+@main.route('/find_filtered_places', methods=['POST'])
+def find_filtered_places():
+    data = request.get_json()
+    query = data.get("query")
+    rating = float(data.get("min_rating"))  # Optional if you want to use it
+    open_time = data.get("open_time")  # Optional
+    close_time = data.get("close_time")  # Optional
+
+    # You can build a more specific query using rating/open_time/close_time if needed
+    place_ids = google_places.find_place_ids(current_app.config['GOOGLE_PLACES_API_KEY'], query, rating)
+
+    return jsonify({"place_ids": place_ids})

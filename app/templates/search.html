@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
         <title>Restaurant Search</title>
         <script src="/static/js/restaurants.js"></script>
     </head>
@@ -37,6 +54,21 @@
             <button onclick="findFilteredRestaurants()">Search Restaurants</button>
             <br><br>
         </div>
+
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows will go here -->
+            </tbody>
+        </table>
+
+        <br><br>
 
         <div style="text-align: center;">
             <a href="{{ url_for('main.home') }}">

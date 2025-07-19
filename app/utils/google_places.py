@@ -3,7 +3,7 @@ from flask import jsonify
 import requests
 
 # Takes in a query and returns a list of place_id's from our query
-def find_place_ids(query, api_key):
+def find_place_ids(api_key, query, rating=4.0):
     # Google Place Text Search API url
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 
@@ -13,13 +13,23 @@ def find_place_ids(query, api_key):
     # Send GET request
     response = requests.get(url, params=params)
 
-    # Check if response is code 200 OK
+    # For now I want to test on the first place that is given
+    # first = response.json().get('results', [])[0]
+
+    result_places = []
+
+    # Continue of we receive OK
     if response.status_code == 200:
-        # return [place['place_id'] for place in response.json().get('results', [])]
-
-        # Only returning one place_id for now since I don't want the API call to be expensive
-        return [response.json().get('results', [])[0]['place_id']]
-
+        for place in response.json().get('results', []):
+            if place['rating'] >= rating:
+                # Extract the values that we want!
+                result_places.append({
+                    'id': place['place_id'],
+                    'name': place['name'],
+                    'rating': place['rating']
+                })
+        
+        return result_places
     else:
         'Invalid'
 
