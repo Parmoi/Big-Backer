@@ -1,5 +1,9 @@
 from config import Config
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+# Create SQLAlchemy instance
+db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
@@ -9,5 +13,11 @@ def create_app():
 
     from .routes import main
     app.register_blueprint(main)    # Register the blueprint
+
+    db.init_app(app)
+
+    # Creates tables that do not exist in the db
+    with app.app_context():
+        db.create_all()
 
     return app

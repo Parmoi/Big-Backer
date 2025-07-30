@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  web:                              # This is our actual web application
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+  db:
+    image: postgres:latest          # Retrieves the internal Docker image for postgres
+    container_name: big-backer-db   # Name of db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}           # Fetches values from .env file
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:                            # External volumes to create on launch
+  pgdata:
