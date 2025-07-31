@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Home</title>
+        <script src="/static/js/db.js"></script>
         <script src="/static/js/geolocate.js"></script>
         <script src="/static/js/restaurants.js"></script>
     </head>
@@ -31,6 +32,14 @@
 
         <div style="text-align: center;">
             <button onclick="getGoogleRestaurants()">Find Google restaurants</button>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="addStore()">Add a store to our db - dummy for now</button>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="returnStores()">See what stores are stored inside db</button>
         </div>
     </body>
 </html>

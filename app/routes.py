@@ -1,5 +1,8 @@
 from flask import Blueprint, current_app, jsonify, render_template, request, session
 
+from app import db
+from app.models import Store
+
 from app.utils import google_places, overpass
 
 main = Blueprint('main', __name__)
@@ -67,3 +70,24 @@ def find_filtered_places():
     place_ids = google_places.find_place_ids(current_app.config['GOOGLE_PLACES_API_KEY'], query, rating)
 
     return jsonify({"place_ids": place_ids})
+
+@main.route('/add')
+def add():
+    new_store = Store(id='abcdef', name='random store')
+    db.session.add(new_store)
+    db.session.commit()
+
+    # For testing purposes, I want to print the table I just added to
+    # Equivalent to SELECT * FROM user
+    # stores = Store.query.all()
+    # print(stores)
+
+    return jsonify({'result': 'its okay!'})
+
+@main.route('/find_stores')
+def find_stores():
+    # Equivalent to SELECT * FROM user
+    stores = Store.query.all()
+
+    json_data = [store.to_dict() for store in stores]
+    return jsonify(json_data)
